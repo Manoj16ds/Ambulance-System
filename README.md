@@ -1,2 +1,37 @@
 # Ambulance-System
 Smart Ambulance System that monitors patient pulse in real time, updates data to a server, turns traffic lights green via RFID when an ambulance approaches and triggers a hospital buzzer on arrival, ensuring faster response, reduced delays and improved emergency preparedness.
+
+
+
+# 🚑 AmbulanceSystem
+
+A functional **Ambulance Assistance System** that combines **patient pulse monitoring** with **RFID-based traffic signal control** to ensure faster emergency response. The system updates real-time pulse data to a server, turns traffic lights green when an ambulance approaches, and triggers a buzzer alert upon hospital arrival.
+
+---
+
+## 📌 Features
+- **Real-time Patient Pulse Monitoring** – Sends data to a central server for hospital preparation.
+- **RFID-Based Traffic Signal Control** – Automatically turns green when ambulance is detected near the signal.
+- **Hospital Proximity Alert** – Activates buzzer as the ambulance nears the hospital.
+- **Traffic Delay Reduction** – Ensures quicker and safer ambulance transit.
+
+
+
+## 🛠 Hardware Requirements
+- NodeMCU / ESP8266 board
+- MFRC522 RFID Reader
+- RFID Tag (assigned to ambulance)
+- Relay Module
+- Traffic Light LEDs 
+- Buzzer
+- Pulse Sensor
+- Jumper Wires & Breadboard
+
+
+
+## 💻 Software Requirements
+- Arduino IDE
+- MFRC522 Library
+- ESP8266 Board Package
+
+
