@@ -1,37 +1,54 @@
-# Ambulance-System
-Smart Ambulance System that monitors patient pulse in real time, updates data to a server, turns traffic lights green via RFID when an ambulance approaches and triggers a hospital buzzer on arrival, ensuring faster response, reduced delays and improved emergency preparedness.
+#include <SPI.h>
+#include <MFRC522.h>
 
+#define SS_PIN D2      // RFID SDA pin
+#define RST_PIN D1     // RFID RST pin
+#define RELAY_PIN D3   // Relay to control traffic light (green)
 
+MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance
 
-# 🚑 AmbulanceSystem
+// Hardcoded UID of the ambulance RFID tag (update as needed)
+byte ambulanceTag[] = {0xDE, 0xAD, 0xBE, 0xEF}; // Replace with actual tag UID
 
-A functional **Ambulance Assistance System** that combines **patient pulse monitoring** with **RFID-based traffic signal control** to ensure faster emergency response. The system updates real-time pulse data to a server, turns traffic lights green when an ambulance approaches, and triggers a buzzer alert upon hospital arrival.
+void setup() {
+  Serial.begin(115200);
+  SPI.begin();
+  mfrc522.PCD_Init();
+  pinMode(RELAY_PIN, OUTPUT);
+  digitalWrite(RELAY_PIN, LOW); // Default: Red light ON
 
----
+  Serial.println("🚦 Traffic System Ready - Waiting for RFID...");
+}
 
-## 📌 Features
-- **Real-time Patient Pulse Monitoring** – Sends data to a central server for hospital preparation.
-- **RFID-Based Traffic Signal Control** – Automatically turns green when ambulance is detected near the signal.
-- **Hospital Proximity Alert** – Activates buzzer as the ambulance nears the hospital.
-- **Traffic Delay Reduction** – Ensures quicker and safer ambulance transit.
+void loop() {
+  if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) {
+    return;
+  }
 
+  Serial.print("Card UID: ");
+  for (byte i = 0; i < mfrc522.uid.size; i++) {
+    Serial.print(mfrc522.uid.uidByte[i], HEX);
+    Serial.print(" ");
+  }
+  Serial.println();
 
+  bool isAmbulance = true;
+  for (byte i = 0; i < 4; i++) {
+    if (mfrc522.uid.uidByte[i] != ambulanceTag[i]) {
+      isAmbulance = false;
+      break;
+    }
+  }
 
-## 🛠 Hardware Requirements
-- NodeMCU / ESP8266 board
-- MFRC522 RFID Reader
-- RFID Tag (assigned to ambulance)
-- Relay Module
-- Traffic Light LEDs 
-- Buzzer
-- Pulse Sensor
-- Jumper Wires & Breadboard
+  if (isAmbulance) {
+    Serial.println("🚑 AMBULANCE DETECTED! Switching to GREEN light.");
+    digitalWrite(RELAY_PIN, HIGH);
+    delay(10000);
+    digitalWrite(RELAY_PIN, LOW);
+    Serial.println("🟥 Back to normal traffic mode.");
+  } else {
+    Serial.println("Unauthorized RFID tag detected.");
+  }
 
-
-
-## 💻 Software Requirements
-- Arduino IDE
-- MFRC522 Library
-- ESP8266 Board Package
-
-
+  mfrc522.PICC_HaltA();
+}
