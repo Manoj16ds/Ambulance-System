@@ -1,7 +1,7 @@
 # 🚑 AmbulanceSystem
 
 
-A functional **Ambulance Assistance System** that combines **patient pulse monitoring** with **RFID-based traffic signal control** to ensure faster emergency response. The system updates real-time pulse data to a server, turns traffic lights green when an ambulance approaches, and triggers a buzzer alert upon hospital arrival.
+A functional **Ambulance Assistance System** that combines **patient pulse monitoring** with **RFID-based traffic signal control** to ensure faster emergency response. The system updates real-time pulse data to a server, turns traffic lights green when an ambulance approaches and triggers a buzzer alert upon hospital arrival.
 
 
 
@@ -18,7 +18,7 @@ A functional **Ambulance Assistance System** that combines **patient pulse monit
 - MFRC522 RFID Reader
 - RFID Tag (assigned to ambulance)
 - Relay Module
-- Traffic Light LEDs (or simulation circuit)
+- Traffic Light LEDs 
 - Buzzer
 - Pulse Sensor
 - Jumper Wires & Breadboard
@@ -29,6 +29,5 @@ A functional **Ambulance Assistance System** that combines **patient pulse monit
 - Arduino IDE
 - MFRC522 Library
 - ESP8266 Board Package
-- Pulse Sensor Library (if applicable)
 
 
